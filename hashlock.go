@@ -80,11 +80,11 @@ func (l *HashLock) DeleteKey(key string) {
 }
 
 // Empty removes all non used keys from hashmap to release memory
-func (l *HashLock) Empty() bool {
+func (l *HashLock) Empty(force bool) bool {
 	l.mapLock.Lock()
 	defer l.mapLock.Unlock()
 	for k, v := range l.locks {
-		if len(v) == 0 {
+		if len(v) == 0 || force {
 			delete(l.locks, k)
 		} else {
 			return false

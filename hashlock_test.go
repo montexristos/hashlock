@@ -175,16 +175,23 @@ func TestHashLock_Empty(t *testing.T) {
 	l := (&HashLock{}).New(10 * time.Second)
 	l.Lock("test")
 	l.Lock("test1")
-	_ = l.Empty()
+	_ = l.Empty(false)
 	if len(l.locks) == 0 {
 		t.Errorf("hashlock emptied while locked")
 		t.Fail()
 	}
 	l.Unlock("test")
 	l.Unlock("test1")
-	_ = l.Empty()
+	_ = l.Empty(false)
 	if len(l.locks) > 0 {
 		t.Errorf("hashlock not emptied while locked")
+		t.Fail()
+	}
+	l.Lock("test")
+	l.Lock("test1")
+	_ = l.Empty(true)
+	if len(l.locks) > 0 {
+		t.Errorf("hashlock not emptied with force")
 		t.Fail()
 	}
 }

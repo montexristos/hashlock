@@ -27,8 +27,8 @@ func (l *HashLock) New(d time.Duration) *HashLock {
 	return l
 }
 
-// GetLock returns a lock condition for the provided key
-func (l *HashLock) GetLock(key string) chan bool {
+// getLock returns a lock condition for the provided key
+func (l *HashLock) getLock(key string) chan bool {
 	l.mapLock.RLock()
 	_, found := l.locks[key]
 	if !found {
@@ -45,13 +45,13 @@ func (l *HashLock) GetLock(key string) chan bool {
 
 // Lock locks the provided key for rw
 func (l *HashLock) Lock(key string) {
-	l.GetLock(key) <- true
+	l.getLock(key) <- true
 	//unlock after one second no need to wait more
 	if l.timeout > 0 {
 		time.AfterFunc(1*l.timeout, func() {
 			// loop to handle more than one locks
-			for i := 0; i < len(l.GetLock(key)); i++ {
-				<-l.GetLock(key)
+			for i := 0; i < len(l.getLock(key)); i++ {
+				<-l.getLock(key)
 			}
 		})
 	}
@@ -59,8 +59,8 @@ func (l *HashLock) Lock(key string) {
 
 // Unlock unlocks the provided key for rw
 func (l *HashLock) Unlock(key string) {
-	if len(l.GetLock(key)) > 0 {
-		<-l.GetLock(key)
+	if len(l.getLock(key)) > 0 {
+		<-l.getLock(key)
 	}
 }
 

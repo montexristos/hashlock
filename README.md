@@ -1,5 +1,8 @@
 # hashlock
 
+[![codecov](https://codecov.io/gh/montexristos/hashlock/branch/master/graph/badge.svg?token=6AU1RTYQZX)](https://codecov.io/gh/montexristos/hashlock)
+[![Go Reference](https://pkg.go.dev/badge/github.com/montexristos/hashlock.svg)](https://pkg.go.dev/github.com/montexristos/hashlock)
+
 ## Description
 
 Package hashlock provides a way to lock multiple string indexes and only allow write access to a resource to one thread at a time

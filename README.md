@@ -2,15 +2,15 @@
 
 ## Description
 
-Package hashlock provides a way to lock multiple string indexes using a single hashmap and only allow write access to one thread at a time
+Package hashlock provides a way to lock multiple string indexes and only allow write access to a resource to one thread at a time
 
-Battle-tested in multiple threaded applications with thousand concurrent writes and reads per minute
+Battle-tested in multi-threaded applications with thousands concurrent writes and reads per minute
 
 ## Background
 
-Most lock mechanisms in golang use sync.Mutex which works quite well most of the times.
+Most lock mechanisms in golang use sync.Mutex which works quite well most of the time.
 
-However, if someone tries to acquire an uninitialized Mutex non recoverable error will occur, and checking if the Mutex is initialized may require complex custom logic
+However, if someone tries to acquire an uninitialized Mutex, a non-recoverable error will occur. Checking if the Mutex is initialized may require complex custom logic
 
 That is the reason this library uses boolean channels to handle locking which handle pretty well in terms of stability and performance
 

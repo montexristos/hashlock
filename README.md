@@ -24,7 +24,7 @@ The goal is to avoid multiple threads writing to the same resource, while keepin
 
     import "github.com/montexristos/hashlock"
 
-    hashLock := (&HashLock{}).New()
+    hashLock := (&HashLock{}).New(1 * time.Second)
 
     // lock the value for read/write
     hashLock.Lock("awesomeKey")
